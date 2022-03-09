@@ -170,6 +170,10 @@
     border-radius: 5px;
   }
 
+  .message .avatar :global(img) {
+    max-width: 100%;
+  }
+
   @keyframes bounce {
     0% {
       transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
