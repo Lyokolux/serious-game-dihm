@@ -29,7 +29,7 @@
       </figure>
     {/if}
     {msg}
-    <div class="timestamp">{getDate()}</div>
+    <div class="timestamp fw-bold">{getDate()}</div>
   </div>
 {/if}
 
@@ -58,9 +58,10 @@
   .message {
     clear: both;
     float: left;
+    color: white;
     padding: 6px 10px 7px;
     border-radius: 10px 10px 10px 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgb(21, 60, 75);
     margin: 8px 0;
     font-size: 1rem;
     line-height: 1.4;
@@ -72,14 +73,14 @@
       position: absolute;
       bottom: -15px;
       font-size: 9px;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgb(21, 60, 75);
     }
 
     &::before {
       content: '';
       position: absolute;
       bottom: -6px;
-      border-top: 6px solid rgba(0, 0, 0, 0.3);
+      border-top: 6px solid rgb(21, 60, 75);
       left: 0;
       border-right: 7px solid transparent;
     }
@@ -108,7 +109,7 @@
       float: right;
       color: #fff;
       text-align: right;
-      background: linear-gradient(120deg, #248a52, #257287);
+      background: #456A76;
       border-radius: 10px 10px 0 10px;
 
       &::before {
@@ -116,7 +117,7 @@
         right: 0;
         border-right: none;
         border-left: 5px solid transparent;
-        border-top: 4px solid #257287;
+        border-top: 4px solid #456A76;
         bottom: -4px;
       }
     }

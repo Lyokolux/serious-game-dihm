@@ -125,7 +125,7 @@
     z-index: 2;
     overflow: hidden;
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.5);
+    background: #88AAB0;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -138,7 +138,7 @@
     flex: 0 1 45px;
     position: relative;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.2);
+    background: #153c4b;
     color: #fff;
     text-transform: uppercase;
     text-align: left;
