@@ -3,27 +3,43 @@
 
   import { SPOKESPERSON } from '../const';
   import Message from './Message.svelte';
-  import Tomatoes from './messages/Tomatoes.svelte';
+  import ReplyButton from './ReplyButton.svelte';
 
-  let keyboarding = '';
+  type Choice = { id: number; label: string };
 
-  const messages: any[] = [
+  let messages: { id: number; msg: string; personal?: boolean }[] = [
     { id: 202202930293, msg: 'Hello 1' },
-    { id: 202202931293, component: Tomatoes}
+  ];
+
+  const choices: Choice[] = [
+    { id: 202202930293, label: 'Hello 1' },
+    { id: 202202930295, label: 'Hello 2' },
+    { id: 202202930296, label: 'Hello 3' },
+    { id: 202202930297, label: 'Hello 4' },
   ];
 
   const updateScrollPosition = () => {
     document.getElementsByClassName('messages-content')[0].scrollTop =
-      document.getElementById('messages-content').scrollHeight;
+      document.getElementsByClassName('messages-content')[0].scrollHeight;
   };
 
-  const insertMessage = () => {
-    messages.push({
+  const reply = (choice: Choice) => {
+    const newMessage = {
       id: messages.length,
-      msg: keyboarding,
+      msg: choice.label,
       personal: true,
-    });
-    keyboarding = '';
+    };
+    messages = [...messages, newMessage];
+    updateScrollPosition();
+  };
+
+  const autoReply = () => {
+    // TOOD
+    updateScrollPosition();
+  };
+
+  const pickChoice = () => {
+    // TODO:
   };
 
   onMount(() => {
@@ -49,27 +65,31 @@
       >
         <Message msg="I am trap shit" />
         <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
         {#each messages as message}
-          <Message msg={message.msg} personal={message.personal} component={message.component} />
+          <Message msg={message.msg} personal={message.personal} />
         {/each}
       </div>
     </div>
   </div>
-  <div class="message-box">
-    <!-- {#each choices as choice}
-            <button type="button" class="message">
-                {choice.label}
-            </button>
-        {/each} -->
-    <input
-      type="text"
-      class="message-input"
-      placeholder="Type message..."
-      value={keyboarding}
-    />
-    <button type="submit" class="message-submit" on:click={insertMessage}>
-      Envoyer
-    </button>
+  <div class="message-box d-flex justify-content-evenly">
+    {#each choices as choice}
+      <ReplyButton
+        className="me-1"
+        label={choice.label}
+        on:click={() => reply(choice)}
+      />
+    {/each}
+    {#if !choices || choices.length == 0}
+      <ReplyButton className="ms-auto" on:click={autoReply} />
+    {/if}
   </div>
 </div>
 <div class="bg" />
@@ -112,7 +132,7 @@
     z-index: 2;
     overflow: hidden;
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-    background: #88AAB0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -125,7 +145,7 @@
     flex: 0 1 45px;
     position: relative;
     z-index: 2;
-    background: #153c4b;
+    background: rgba(0, 0, 0, 0.2);
     color: #fff;
     text-transform: uppercase;
     text-align: left;
@@ -256,5 +276,18 @@ Custom Srollbar
 
   .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .reply {
+    &::before {
+      position: absolute;
+      content: '';
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 5px solid transparent;
+      border-top: 4px solid #257287;
+      bottom: -4px;
+    }
   }
 </style>
