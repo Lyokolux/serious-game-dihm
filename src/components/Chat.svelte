@@ -18,8 +18,8 @@
   const insertMessage = () => {
     messages.push({
       id: messages.length,
-      personal: true,
       msg: keyboarding,
+      personal: true,
     });
     keyboarding = '';
   };

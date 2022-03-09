@@ -5,14 +5,13 @@
   export let msg = '';
 
   let loading = !personal;
+  setTimeout(() => (loading = false), 1000 + Math.random() * 20 * 100);
 
   function getDate() {
     const d = new Date();
     const m = d.getMinutes();
     return `${d.getHours()}:${m}`;
   }
-
-  setTimeout(() => (loading = false), 1000 + Math.random() * 20 * 100);
 </script>
 
 {#if loading}
