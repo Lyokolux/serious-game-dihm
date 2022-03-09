@@ -2,14 +2,13 @@
   import { onMount } from 'svelte';
 
   import { SPOKESPERSON } from '../const';
+import { user } from '../stores';
   import Message from './Message.svelte';
   import ReplyButton from './ReplyButton.svelte';
 
   type Choice = { id: number; label: string };
 
-  let messages: { id: number; msg: string; personal?: boolean }[] = [
-    { id: 202202930293, msg: 'Hello 1' },
-  ];
+  let messages: any[] = [];
 
   const choices: Choice[] = [
     { id: 202202930293, label: 'Hello 1' },
@@ -32,6 +31,10 @@
     // });
   };
 
+  const insertMessage = (message, personal = false, isComponent = false) => {
+    const msg = isComponent ? { component: message } : { msg: message }
+    messages = [...messages, {...msg, personal}]
+    keyboarding = '';
   const reply = (choice: Choice) => {
     const newMessage = {
       id: messages.length,
@@ -49,13 +52,14 @@
 
   onMount(() => {
     updateScrollPosition;
+    insertMessage(`Salut ${$user.name} ! Comment tu vas ?`)
   });
 </script>
 
 <div class="chat">
   <div class="chat-title">
     <h1>{SPOKESPERSON.name}</h1>
-    <h2>{SPOKESPERSON.subame}</h2>
+    <h2>{SPOKESPERSON.subname}</h2>
     <figure class="avatar">
       <img src={SPOKESPERSON.avatarSrc} alt="" />
     </figure>
@@ -68,16 +72,6 @@
         style="max-height: none;"
         tabindex="0"
       >
-        <Message msg="I am trap shit" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
         {#each messages as message}
           <Message msg={message.msg} personal={message.personal} />
         {/each}
