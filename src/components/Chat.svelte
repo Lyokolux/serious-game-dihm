@@ -6,16 +6,11 @@ import { user } from '../stores';
   import Message from './Message.svelte';
   import ReplyButton from './ReplyButton.svelte';
 
-  type Choice = { id: number; label: string };
+  type Choice = { id: number; label: string, onChoosed: (selectedId: number) => void };
 
   let messages: any[] = [];
 
-  const choices: Choice[] = [
-    { id: 202202930293, label: 'Hello 1' },
-    { id: 202202930295, label: 'Hello 2' },
-    { id: 202202930296, label: 'Hello 3' },
-    { id: 202202930297, label: 'Hello 4' },
-  ];
+  let choices: Choice[] = [];
 
   const updateScrollPosition = () => {
     document
@@ -42,13 +37,22 @@ import { user } from '../stores';
   };
 
   const autoReply = () => {
-    // TOOD
     updateScrollPosition();
   };
 
   onMount(() => {
     updateScrollPosition;
     insertMessage(`Salut ${$user.name} ! Comment tu vas ?`)
+    choices = [
+      ...choices,
+      { 
+        id: 123, 
+        label: 'Salut ça va bien et toi ?', 
+        onChoosed: () => {
+          insertMessage('J\'ai une petite question, tu as du temps devant toi ?')
+        }
+      }
+    ]
   });
 </script>
 
@@ -76,15 +80,15 @@ import { user } from '../stores';
   </div>
   <div class="message-box d-flex justify-content-evenly">
     {#each choices as choice}
-      <ReplyButton
-        className="me-1"
-        label={choice.label}
-        on:click={() => reply(choice)}
-      />
+        <ReplyButton
+          className="me-1"
+          label={choices.length <= 1 ? undefined : choice.label}
+          on:click={() => {
+            reply(choice)
+            choice.onChoosed(choice.id)
+          }}
+        />
     {/each}
-    {#if !choices || choices.length == 0}
-      <ReplyButton className="ms-auto" on:click={autoReply} />
-    {/if}
   </div>
 </div>
 <div class="bg" />
