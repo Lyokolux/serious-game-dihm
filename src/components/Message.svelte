@@ -11,7 +11,7 @@
   function getDate() {
     const d = new Date();
     const m = d.getMinutes();
-    return `${d.getHours()}:${m}`;
+    return `${d.getHours()}:${m.toString().padStart(2, '0')}`;
   }
 </script>
 
