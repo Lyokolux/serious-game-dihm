@@ -34,14 +34,10 @@ import { user } from '../stores';
   const insertMessage = (message, personal = false, isComponent = false) => {
     const msg = isComponent ? { component: message } : { msg: message }
     messages = [...messages, {...msg, personal}]
-    keyboarding = '';
+  }
+
   const reply = (choice: Choice) => {
-    const newMessage = {
-      id: messages.length,
-      msg: choice.label,
-      personal: true,
-    };
-    messages = [...messages, newMessage];
+    insertMessage(choice.label, true)
     updateScrollPosition();
   };
 
