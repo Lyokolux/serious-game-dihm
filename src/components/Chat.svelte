@@ -55,7 +55,7 @@
                 {choice.label}
             </button>
         {/each} -->
-    <textarea
+    <input
       type="text"
       class="message-input"
       placeholder="Type message..."
@@ -195,7 +195,7 @@
       outline: none !important;
       resize: none;
       color: rgba(255, 255, 255, 0.7);
-      font-size: 11px;
+      font-size: 1rem;
       height: 17px;
       margin: 0;
       padding-right: 20px;
