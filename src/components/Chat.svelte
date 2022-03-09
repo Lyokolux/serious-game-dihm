@@ -69,6 +69,12 @@
 <div class="bg" />
 
 <style lang="scss">
+  @mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   /*--------------------
     Body
     --------------------*/
