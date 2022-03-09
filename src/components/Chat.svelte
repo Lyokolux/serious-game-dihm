@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   import { SPOKESPERSON } from '../const';
   import Message from './Message.svelte';
 
@@ -15,6 +17,11 @@
   //   { id: 202202930297, label: 'Hello 4' },
   // ];
 
+  const updateScrollPosition = () => {
+    document.getElementsByClassName('messages-content')[0].scrollTop =
+      document.getElementById('messages-content').scrollHeight;
+  };
+
   const insertMessage = () => {
     messages.push({
       id: messages.length,
@@ -23,6 +30,10 @@
     });
     keyboarding = '';
   };
+
+  onMount(() => {
+    updateScrollPosition;
+  });
 </script>
 
 <div class="chat">
@@ -42,6 +53,14 @@
         tabindex="0"
       >
         <Message msg="I am trap shit" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
+        <Message personal msg="Ok everything will be all right" />
         <Message personal msg="Ok everything will be all right" />
         {#each messages as message}
           <Message msg={message.msg} personal={message.personal} />
@@ -123,30 +142,30 @@
     color: #fff;
     text-transform: uppercase;
     text-align: left;
-    padding: 10px 10px 10px 50px;
+    padding: 10px 10px 10px 4rem;
 
     h1,
     h2 {
       font-weight: normal;
-      font-size: 10px;
+      font-size: 1.1rem;
       margin: 0;
       padding: 0;
     }
 
     h2 {
       color: rgba(255, 255, 255, 0.5);
-      font-size: 8px;
+      font-size: 0.8rem;
       letter-spacing: 1px;
     }
 
     .avatar {
       position: absolute;
       z-index: 1;
-      top: 8px;
+      top: 0.25rem;
       left: 9px;
       border-radius: 30px;
-      width: 30px;
-      height: 30px;
+      width: 3rem;
+      height: 3rem;
       overflow: hidden;
       margin: 0;
       padding: 0;
