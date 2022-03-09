@@ -3,19 +3,14 @@
 
   import { SPOKESPERSON } from '../const';
   import Message from './Message.svelte';
+  import Tomatoes from './messages/Tomatoes.svelte';
 
   let keyboarding = '';
 
-  const messages: { id: number; msg: string; personal?: boolean }[] = [
+  const messages: any[] = [
     { id: 202202930293, msg: 'Hello 1' },
+    { id: 202202931293, component: Tomatoes}
   ];
-
-  // const choices = [
-  //   { id: 202202930293, label: 'Hello 1' },
-  //   { id: 202202930295, label: 'Hello 2' },
-  //   { id: 202202930296, label: 'Hello 3' },
-  //   { id: 202202930297, label: 'Hello 4' },
-  // ];
 
   const updateScrollPosition = () => {
     document.getElementsByClassName('messages-content')[0].scrollTop =
@@ -54,16 +49,8 @@
       >
         <Message msg="I am trap shit" />
         <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
-        <Message personal msg="Ok everything will be all right" />
         {#each messages as message}
-          <Message msg={message.msg} personal={message.personal} />
+          <Message msg={message.msg} personal={message.personal} component={message.component} />
         {/each}
       </div>
     </div>

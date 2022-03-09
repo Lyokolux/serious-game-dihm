@@ -61,3 +61,7 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+.w-fit-content {
+	width: fit-content;
+}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { user } from '../stores'
+  import { user, narrator } from '../stores'
 
   export let onSubmit: () => void
 
@@ -13,6 +13,12 @@
     presbytie: false,
     glaucome: false,
     autres: false
+  }
+
+  const generateNarratorStore = () => {
+    $narrator = {
+      
+    }
   }
 
   const submit = (): void => {

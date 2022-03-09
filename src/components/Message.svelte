@@ -3,6 +3,7 @@
 
   export let personal = false;
   export let msg = '';
+  export let component;
 
   let loading = !personal;
   setTimeout(() => (loading = false), 1000 + Math.random() * 20 * 100);
@@ -28,7 +29,11 @@
         <img src={SPOKESPERSON.avatarSrc} alt="" />
       </figure>
     {/if}
-    {msg}
+    {#if component}
+      <svelte:component this={component} />
+    {:else}
+      {msg}
+    {/if}
     <div class="timestamp fw-bold">{getDate()}</div>
   </div>
 {/if}
@@ -158,6 +163,11 @@
         }
       }
     }
+  }
+
+  .message :global(img) {
+    max-width: 50%;
+    border-radius: 5px;
   }
 
   @keyframes bounce {
