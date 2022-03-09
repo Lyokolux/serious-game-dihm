@@ -28,7 +28,7 @@ const createScreenStore = () => {
 }
 
 const createUserStore = () => {
-  const { subscribe, update, set } = writable<User>({} as User)
+  const { subscribe, update, set } = writable<User>({ name: "Bouffon"} as User)
 
   return {
     subscribe,
@@ -38,7 +38,7 @@ const createUserStore = () => {
 }
 
 const createNarratorStore = () => {
-  const { subscribe, update, set } = writable<User>({} as Narrator)
+  const { subscribe, update, set } = writable<Narrator>({} as Narrator)
 
   return {
     subscribe,

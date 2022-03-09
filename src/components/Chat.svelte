@@ -2,39 +2,124 @@
   import { onMount } from 'svelte';
 
   import { SPOKESPERSON } from '../const';
+import { user } from '../stores';
   import Message from './Message.svelte';
-  import Tomatoes from './messages/Tomatoes.svelte';
+import Radar from './messages/Radar.svelte';
+import Tomatoes from './messages/Tomatoes.svelte';
+  import ReplyButton from './ReplyButton.svelte';
 
-  let keyboarding = '';
+  type Choice = { id: number; label: string, onChoosed: (selectedId: number) => void };
 
-  const messages: any[] = [
-    { id: 202202930293, msg: 'Hello 1' },
-    { id: 202202931293, component: Tomatoes}
-  ];
+  let messages: any[] = [];
+
+  let choices: Choice[] = [];
 
   const updateScrollPosition = () => {
-    document.getElementsByClassName('messages-content')[0].scrollTop =
-      document.getElementById('messages-content').scrollHeight;
+    document
+      .getElementsByClassName('message')
+      [document.getElementsByClassName('message').length - 1].scrollIntoView({
+        block: 'start',
+      });
+    // document.getElementsByClassName('messages-content')[0].scrollTo({
+    //   top: document.getElementsByClassName('message')[
+    //     document.getElementsByClassName('message').length - 1
+    //   ].scrollHeight,
+    //   behavior: 'smooth',
+    // });
   };
 
-  const insertMessage = () => {
-    messages.push({
-      id: messages.length,
-      msg: keyboarding,
-      personal: true,
-    });
-    keyboarding = '';
+  const insertMessage = (message, personal = false, isComponent = false) => {
+    const msg = isComponent ? { component: message } : { msg: message }
+    messages = [...messages, {...msg, personal}]
+  }
+
+  const reply = (choice: Choice) => {
+    insertMessage(choice.label, true)
+    updateScrollPosition();
   };
+
+  const autoReply = () => {
+    updateScrollPosition();
+  };
+
+  const choixTomates = () => {
+    insertMessage(Tomatoes, undefined, true)
+    choices = [
+      {id: 1, label: "Elles sont clairement mûres ! Tu peux les manger", onChoosed: choixRadar },
+      {id: 2, label: 'Elles sont tout à fait vertes. Je pense que c’est pas une bonne idée de les manger', onChoosed: choixRadar }
+    ]
+  }
+
+  const choixRadar = (id: number) => {
+    choices = []
+    if (id === 1) {
+      insertMessage('Merci beaucoup, en effet, avec le peu de lumière qu’il y a, je ne l’avais pas vu')
+    } else {
+      insertMessage('Ah attend, c’est bon, je le vois maintenant. Merci quand même')
+    }
+
+    setTimeout(() => {
+      insertMessage('Écoutes, je vais me diriger vers ce point, prions que je ne sois pas perdu sur le chemin. On se tient au courant')
+      setTimeout(() => {
+        insertMessage('OK. Je crois que je suis perdu.')
+        setTimeout(() => {
+          insertMessage('Je viens de passer deux heures à marcher en direction de la ville mais je n’ai toujours aucune trace de la civilisation.')
+          setTimeout(() => {
+            insertMessage('Je t’avoue que j’ai un peu faim maintenant, je viens de trouver des tomates, mais elles sont bizarrement vertes, je te les envois')
+            insertMessage('Tu penses que je peux les manger ?')
+            choixTomates()
+          }, 2000);
+        }, 2000);
+      }, 4000)
+    }, 2000)
+  }
+
+  const choixJinterviens = () => {
+    insertMessage("Ça fait maintenant 2 heures que je suis coincé dans cette immense forêt. J’ai rencontré tout à l’heure un autochtone dans la forêt, il m’avait l’air assez pressé mais je lui ai demandé dans quelle direction se trouvait la ville la plus proche. Ne comprenant pas exactement ce qu’il me disait, il me l’a marqué d’une tâche blanche sur mon radar. Mais je ne vois pas où se trouve la tâche, tu peux m’aider ?")
+    choices = []
+    setTimeout(() => {
+      insertMessage(Radar, undefined, true)
+      choices = [
+        {id: 1, label: "On voit le point", onChoosed: choixRadar },
+        {id: 2, label: 'Je ne vois pas non plus', onChoosed: choixRadar }
+      ]
+    }, 3000)
+  }
+
+  const choixAider = () => {
+    insertMessage('J\'ai une petite question, tu as du temps devant toi ?')
+    const goNext = (id: number) => {
+      insertMessage("Je suis actuellement au Canada, j’étais avec un groupe d'explorateurs dans le cadre de mes recherches. Alors qu’on était en train de remonter le fleuve Mackenzie, on s'est arrêté sur le bord pour faire une pause. J’étais tranquillement en train de regarder un magnifique Érable lorsqu'un bruit étrange à attiré mon attention. Après quelques minutes d'interrogation sur son origine, j’ai décidé de retourner auprès de l’équipe. Arrivé sur le lieu de débarquation plus aucunes traces du bateau et de ses occupants. Je me retrouve donc maintenant perdu et il me faudrait de l’aide pour retrouver la civilisation.")
+      choices = [
+        {id: 1, label: "C’est donc à cet instant que j’interviens ?", onChoosed: choixJinterviens },
+        {id: 2, label: 'Oula, ça fait peur !', onChoosed: choixJinterviens }
+      ]
+    }
+
+    choices = [
+      {id: 1, label: 'Oui pas de souci', onChoosed: goNext },
+      {id: 2, label: 'Non mais je vais me libérer', onChoosed: goNext }
+    ]
+  }
 
   onMount(() => {
     updateScrollPosition;
+    insertMessage(`Salut ${$user.name} ! Comment tu vas ?`)
+    choices = [
+      ...choices,
+      { 
+        id: 123, 
+        label: 'Salut ça va bien et toi ?', 
+        onChoosed: choixAider
+      }
+    ]
   });
 </script>
 
 <div class="chat">
   <div class="chat-title">
     <h1>{SPOKESPERSON.name}</h1>
-    <h2>{SPOKESPERSON.subame}</h2>
+    <h2>{SPOKESPERSON.subname}</h2>
     <figure class="avatar">
       <img src={SPOKESPERSON.avatarSrc} alt="" />
     </figure>
@@ -47,29 +132,23 @@
         style="max-height: none;"
         tabindex="0"
       >
-        <Message msg="I am trap shit" />
-        <Message personal msg="Ok everything will be all right" />
         {#each messages as message}
           <Message msg={message.msg} personal={message.personal} component={message.component} />
         {/each}
       </div>
     </div>
   </div>
-  <div class="message-box">
-    <!-- {#each choices as choice}
-            <button type="button" class="message">
-                {choice.label}
-            </button>
-        {/each} -->
-    <input
-      type="text"
-      class="message-input"
-      placeholder="Type message..."
-      value={keyboarding}
-    />
-    <button type="submit" class="message-submit" on:click={insertMessage}>
-      Envoyer
-    </button>
+  <div class="message-box d-flex justify-content-evenly">
+    {#each choices as choice}
+        <ReplyButton
+          className="me-1"
+          label={choices.length <= 1 ? undefined : choice.label}
+          on:click={() => {
+            reply(choice)
+            choice.onChoosed(choice.id)
+          }}
+        />
+    {/each}
   </div>
 </div>
 <div class="bg" />
@@ -111,7 +190,7 @@
     width: 100%;
     z-index: 2;
     overflow: hidden;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 30px #88AAB0;
     background: #88AAB0;
     display: flex;
     justify-content: space-between;
@@ -125,7 +204,7 @@
     flex: 0 1 45px;
     position: relative;
     z-index: 2;
-    background: #153c4b;
+    background:  #153c4b;
     color: #fff;
     text-transform: uppercase;
     text-align: left;
@@ -256,5 +335,18 @@ Custom Srollbar
 
   .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .reply {
+    &::before {
+      position: absolute;
+      content: '';
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 5px solid transparent;
+      border-top: 4px solid #257287;
+      bottom: -4px;
+    }
   }
 </style>

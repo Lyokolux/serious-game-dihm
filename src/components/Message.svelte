@@ -6,12 +6,12 @@
   export let component;
 
   let loading = !personal;
-  setTimeout(() => (loading = false), 1000 + Math.random() * 20 * 100);
+  setTimeout(() => (loading = false), 500 + Math.random() * 20 * 100);
 
   function getDate() {
     const d = new Date();
     const m = d.getMinutes();
-    return `${d.getHours()}:${m}`;
+    return `${d.getHours()}:${m.toString().padStart(2, '0')}`;
   }
 </script>
 
@@ -67,7 +67,7 @@
     padding: 6px 10px 7px;
     border-radius: 10px 10px 10px 0;
     background: rgb(21, 60, 75);
-    margin: 8px 0;
+    margin: 12px 0;
     font-size: 1rem;
     line-height: 1.4;
     margin-left: 35px;
@@ -77,7 +77,7 @@
     .timestamp {
       position: absolute;
       bottom: -15px;
-      font-size: 9px;
+      font-size: 0.7rem;
       color: rgb(21, 60, 75);
     }
 
@@ -114,15 +114,19 @@
       float: right;
       color: #fff;
       text-align: right;
-      background: #456A76;
+      background: #456a76;
       border-radius: 10px 10px 0 10px;
+
+      .timestamp {
+        right: 0.5rem;
+      }
 
       &::before {
         left: auto;
         right: 0;
         border-right: none;
         border-left: 5px solid transparent;
-        border-top: 4px solid #456A76;
+        border-top: 4px solid #456a76;
         bottom: -4px;
       }
     }

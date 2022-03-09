@@ -1,6 +1,6 @@
 
 export const SPOKESPERSON = {
     name: 'Fabio Ottaviani',
-    subame: 'Daddy',
+    subname: 'scientifique',
     avatarSrc: '/adventure.png'
 }
