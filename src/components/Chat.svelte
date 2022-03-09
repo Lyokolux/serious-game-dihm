@@ -84,20 +84,6 @@
     box-sizing: border-box;
   }
 
-  html,
-  body {
-    height: 100%;
-  }
-
-  body {
-    background: linear-gradient(135deg, #044f48, #2a7561);
-    background-size: cover;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    line-height: 1.3;
-    overflow: hidden;
-  }
-
   .bg {
     top: 0;
     left: 0;
@@ -121,7 +107,6 @@
     overflow: hidden;
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
