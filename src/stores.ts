@@ -6,6 +6,12 @@ interface Screen {
   device?: 'mobile' | 'computer'
 }
 
+interface User {
+  name: string
+  age: number
+  diseases: string[]
+}
+
 const createScreenStore = () => {
   const { subscribe, update, set } = writable<Screen>({} as Screen)
 
@@ -16,4 +22,15 @@ const createScreenStore = () => {
   }
 }
 
+const createUserStore = () => {
+  const { subscribe, update, set } = writable<User>({} as User)
+
+  return {
+    subscribe,
+    update,
+    set
+  }
+}
+
 export const screen = createScreenStore()
+export const user = createUserStore()

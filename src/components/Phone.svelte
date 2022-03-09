@@ -1,4 +1,4 @@
-<div class="container">
+<div class="ctn">
   <div class="phone" />
   <div class="home-button" />
   <div class="screen">
@@ -10,7 +10,7 @@
   $offwhite: #e9dbdb;
   $offwhite: #c7cce6;
 
-  .container {
+  .ctn {
     position: relative;
     height: 660px;
     width: 400px;
@@ -52,6 +52,7 @@
     border-radius: 5px;
     border: 1px solid darken($offwhite, 10%);
     overflow: hidden;
+    background-color: white;
   }
 
   .home-button {
