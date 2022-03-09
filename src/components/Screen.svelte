@@ -2,7 +2,7 @@
   import Chat from "./Chat.svelte";
   import UserForm from "./UserForm.svelte";
 
-  let currentScreen: 'form' | 'messages' = 'messages'
+  let currentScreen: 'form' | 'messages' = 'form'
 </script>
 
 {#if currentScreen === 'form'}
