@@ -1,11 +1,13 @@
+<script lang="ts">
+    import { SPOKESPERSON } from '../const';
+</script>
+
 <div class="chat">
     <div class="chat-title">
-        <h1>Fabio Ottaviani</h1>
-        <h2>Supah</h2>
+        <h1>{SPOKESPERSON.name}</h1>
+        <h2>{SPOKESPERSON.subame}</h2>
         <figure class="avatar">
-            <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg"
-            />
+            <img src={SPOKESPERSON.avatarSrc} />
         </figure>
     </div>
     <div class="messages">
@@ -47,8 +49,8 @@ Mixins
     }
 
     /*--------------------
-Body
---------------------*/
+    Body
+    --------------------*/
     *,
     *::before,
     *::after {
@@ -70,8 +72,6 @@ Body
     }
 
     .bg {
-        width: 100%;
-        height: 100%;
         top: 0;
         left: 0;
         z-index: 1;
@@ -86,9 +86,8 @@ Chat
 --------------------*/
     .chat {
         @include center;
-        width: 300px;
-        height: 80vh;
-        max-height: 500px;
+        height: 100%;
+        width: 100%;
         z-index: 2;
         overflow: hidden;
         box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
