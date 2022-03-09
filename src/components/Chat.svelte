@@ -34,7 +34,7 @@
     </figure>
   </div>
   <div class="messages">
-    <div class="messages-content">
+    <div class="messages-content p-2">
       <div
         id="mCSB_1"
         class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
@@ -151,6 +151,7 @@
       margin: 0;
       padding: 0;
       border: 2px solid rgba(255, 255, 255, 0.24);
+      background: white;
 
       img {
         width: 100%;

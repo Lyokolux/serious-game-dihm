@@ -96,6 +96,7 @@
       margin: 0;
       padding: 0;
       border: 2px solid rgba(255, 255, 255, 0.24);
+      background: white;
 
       img {
         width: 100%;

@@ -12,6 +12,11 @@ interface User {
   diseases: string[]
 }
 
+interface Narrator {
+  name: string
+  type: 'tonton' | 'petit-fils'
+}
+
 const createScreenStore = () => {
   const { subscribe, update, set } = writable<Screen>({} as Screen)
 
@@ -32,5 +37,16 @@ const createUserStore = () => {
   }
 }
 
+const createNarratorStore = () => {
+  const { subscribe, update, set } = writable<User>({} as Narrator)
+
+  return {
+    subscribe,
+    update,
+    set
+  }
+}
+
 export const screen = createScreenStore()
 export const user = createUserStore()
+export const narrator = createNarratorStore()
