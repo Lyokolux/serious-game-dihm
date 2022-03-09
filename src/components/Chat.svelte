@@ -19,8 +19,17 @@
   ];
 
   const updateScrollPosition = () => {
-    document.getElementsByClassName('messages-content')[0].scrollTop =
-      document.getElementsByClassName('messages-content')[0].scrollHeight;
+    document
+      .getElementsByClassName('message')
+      [document.getElementsByClassName('message').length - 1].scrollIntoView({
+        block: 'start',
+      });
+    // document.getElementsByClassName('messages-content')[0].scrollTo({
+    //   top: document.getElementsByClassName('message')[
+    //     document.getElementsByClassName('message').length - 1
+    //   ].scrollHeight,
+    //   behavior: 'smooth',
+    // });
   };
 
   const reply = (choice: Choice) => {
@@ -36,10 +45,6 @@
   const autoReply = () => {
     // TOOD
     updateScrollPosition();
-  };
-
-  const pickChoice = () => {
-    // TODO:
   };
 
   onMount(() => {
