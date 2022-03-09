@@ -4,6 +4,7 @@
   import { SPOKESPERSON } from '../const';
 import { user } from '../stores';
   import Message from './Message.svelte';
+import CompteRendu from './messages/CompteRendu.svelte';
 import Radar from './messages/Radar.svelte';
 import Tomatoes from './messages/Tomatoes.svelte';
   import ReplyButton from './ReplyButton.svelte';
@@ -33,6 +34,10 @@ import Tomatoes from './messages/Tomatoes.svelte';
     messages = [...messages, {...msg, personal}]
   }
 
+  const emptyChoices = () => {
+    choices = []
+  }
+
   const reply = (choice: Choice) => {
     insertMessage(choice.label, true)
     updateScrollPosition();
@@ -42,16 +47,29 @@ import Tomatoes from './messages/Tomatoes.svelte';
     updateScrollPosition();
   };
 
+  const choixFinal = (id: number) => {
+    emptyChoices()
+    insertMessage('Merci de ton aide, mon ami, sans toi je ne saurai vraiment plus quoi faire dans cette forêt.')
+
+    setTimeout(() => {
+      insertMessage('En guise de remerciement, voici un petit quelque chose pour toi.')
+
+      setTimeout(() => {
+        insertMessage(CompteRendu, undefined, true)
+      }, 3000);
+    }, 3000);
+  }
+
   const choixTomates = () => {
     insertMessage(Tomatoes, undefined, true)
     choices = [
-      {id: 1, label: "Elles sont clairement mûres ! Tu peux les manger", onChoosed: choixRadar },
-      {id: 2, label: 'Elles sont tout à fait vertes. Je pense que c’est pas une bonne idée de les manger', onChoosed: choixRadar }
+      {id: 1, label: "Elles sont clairement mûres ! Tu peux les manger", onChoosed: choixFinal },
+      {id: 2, label: 'Elles sont tout à fait vertes. Je pense que c’est pas une bonne idée de les manger', onChoosed: choixFinal }
     ]
   }
 
   const choixRadar = (id: number) => {
-    choices = []
+    emptyChoices()
     if (id === 1) {
       insertMessage('Merci beaucoup, en effet, avec le peu de lumière qu’il y a, je ne l’avais pas vu')
     } else {
@@ -76,7 +94,7 @@ import Tomatoes from './messages/Tomatoes.svelte';
 
   const choixJinterviens = () => {
     insertMessage("Ça fait maintenant 2 heures que je suis coincé dans cette immense forêt. J’ai rencontré tout à l’heure un autochtone dans la forêt, il m’avait l’air assez pressé mais je lui ai demandé dans quelle direction se trouvait la ville la plus proche. Ne comprenant pas exactement ce qu’il me disait, il me l’a marqué d’une tâche blanche sur mon radar. Mais je ne vois pas où se trouve la tâche, tu peux m’aider ?")
-    choices = []
+    emptyChoices()
     setTimeout(() => {
       insertMessage(Radar, undefined, true)
       choices = [
