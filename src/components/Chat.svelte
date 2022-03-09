@@ -175,6 +175,7 @@
       left: 0;
       height: 101%;
       width: 100%;
+      overflow-y: scroll;
     }
   }
 
