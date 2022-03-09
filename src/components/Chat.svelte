@@ -4,6 +4,8 @@
   import { SPOKESPERSON } from '../const';
 import { user } from '../stores';
   import Message from './Message.svelte';
+import Radar from './messages/Radar.svelte';
+import Tomatoes from './messages/Tomatoes.svelte';
   import ReplyButton from './ReplyButton.svelte';
 
   type Choice = { id: number; label: string, onChoosed: (selectedId: number) => void };
@@ -40,6 +42,66 @@ import { user } from '../stores';
     updateScrollPosition();
   };
 
+  const choixTomates = () => {
+    insertMessage(Tomatoes, undefined, true)
+    choices = [
+      {id: 1, label: "Elles sont clairement mûres ! Tu peux les manger", onChoosed: choixRadar },
+      {id: 2, label: 'Elles sont tout à fait vertes. Je pense que c’est pas une bonne idée de les manger', onChoosed: choixRadar }
+    ]
+  }
+
+  const choixRadar = (id: number) => {
+    choices = []
+    if (id === 1) {
+      insertMessage('Merci beaucoup, en effet, avec le peu de lumière qu’il y a, je ne l’avais pas vu')
+    } else {
+      insertMessage('Ah attend, c’est bon, je le vois maintenant. Merci quand même')
+    }
+
+    setTimeout(() => {
+      insertMessage('Écoutes, je vais me diriger vers ce point, prions que je ne sois pas perdu sur le chemin. On se tient au courant')
+      setTimeout(() => {
+        insertMessage('OK. Je crois que je suis perdu.')
+        setTimeout(() => {
+          insertMessage('Je viens de passer deux heures à marcher en direction de la ville mais je n’ai toujours aucune trace de la civilisation.')
+          setTimeout(() => {
+            insertMessage('Je t’avoue que j’ai un peu faim maintenant, je viens de trouver des tomates, mais elles sont bizarrement vertes, je te les envois')
+            insertMessage('Tu penses que je peux les manger ?')
+            choixTomates()
+          }, 2000);
+        }, 2000);
+      }, 4000)
+    }, 2000)
+  }
+
+  const choixJinterviens = () => {
+    insertMessage("Ça fait maintenant 2 heures que je suis coincé dans cette immense forêt. J’ai rencontré tout à l’heure un autochtone dans la forêt, il m’avait l’air assez pressé mais je lui ai demandé dans quelle direction se trouvait la ville la plus proche. Ne comprenant pas exactement ce qu’il me disait, il me l’a marqué d’une tâche blanche sur mon radar. Mais je ne vois pas où se trouve la tâche, tu peux m’aider ?")
+    choices = []
+    setTimeout(() => {
+      insertMessage(Radar, undefined, true)
+      choices = [
+        {id: 1, label: "On voit le point", onChoosed: choixRadar },
+        {id: 2, label: 'Je ne vois pas non plus', onChoosed: choixRadar }
+      ]
+    }, 3000)
+  }
+
+  const choixAider = () => {
+    insertMessage('J\'ai une petite question, tu as du temps devant toi ?')
+    const goNext = (id: number) => {
+      insertMessage("Je suis actuellement au Canada, j’étais avec un groupe d'explorateurs dans le cadre de mes recherches. Alors qu’on était en train de remonter le fleuve Mackenzie, on s'est arrêté sur le bord pour faire une pause. J’étais tranquillement en train de regarder un magnifique Érable lorsqu'un bruit étrange à attiré mon attention. Après quelques minutes d'interrogation sur son origine, j’ai décidé de retourner auprès de l’équipe. Arrivé sur le lieu de débarquation plus aucunes traces du bateau et de ses occupants. Je me retrouve donc maintenant perdu et il me faudrait de l’aide pour retrouver la civilisation.")
+      choices = [
+        {id: 1, label: "C’est donc à cet instant que j’interviens ?", onChoosed: choixJinterviens },
+        {id: 2, label: 'Oula, ça fait peur !', onChoosed: choixJinterviens }
+      ]
+    }
+
+    choices = [
+      {id: 1, label: 'Oui pas de souci', onChoosed: goNext },
+      {id: 2, label: 'Non mais je vais me libérer', onChoosed: goNext }
+    ]
+  }
+
   onMount(() => {
     updateScrollPosition;
     insertMessage(`Salut ${$user.name} ! Comment tu vas ?`)
@@ -48,9 +110,7 @@ import { user } from '../stores';
       { 
         id: 123, 
         label: 'Salut ça va bien et toi ?', 
-        onChoosed: () => {
-          insertMessage('J\'ai une petite question, tu as du temps devant toi ?')
-        }
+        onChoosed: choixAider
       }
     ]
   });
@@ -73,7 +133,7 @@ import { user } from '../stores';
         tabindex="0"
       >
         {#each messages as message}
-          <Message msg={message.msg} personal={message.personal} />
+          <Message msg={message.msg} personal={message.personal} component={message.component} />
         {/each}
       </div>
     </div>

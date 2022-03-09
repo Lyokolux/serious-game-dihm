@@ -6,7 +6,7 @@
   export let component;
 
   let loading = !personal;
-  setTimeout(() => (loading = false), 1000 + Math.random() * 20 * 100);
+  setTimeout(() => (loading = false), 500 + Math.random() * 20 * 100);
 
   function getDate() {
     const d = new Date();
